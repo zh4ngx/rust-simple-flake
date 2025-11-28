@@ -1,13 +1,19 @@
 fn main() {
-    println!("Hello, world!");
-    let x = 42;
-    let mut y = &x; // y is of type &i32
+    let mut s = Box::new(42);
+    dbg!(&s);
+    replace_with_84(&mut s);
+    dbg!(&s);
+}
 
-    println!("y is {y}");
-    y = &100;
-    println!("y is {y}");
-    let z = &mut y;
-
-    *z = &33;
-    println!("y is {y}");
+fn replace_with_84(s: &mut Box<i32>) {
+    // this is not okay, as *s would be empty:
+    // let was = *s;
+    // but this is:
+    let was = std::mem::take(s);
+    // so is this:
+    *s = was;
+    // we can exchange values behind &mut:
+    let mut r = Box::new(84);
+    std::mem::swap(s, &mut r);
+    assert_ne!(*r, 84);
 }
