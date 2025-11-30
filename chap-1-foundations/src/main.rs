@@ -19,7 +19,7 @@ fn main() {
     dbg!(bar);
 }
 
-#[repr(C)]
+#[repr(Rust)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 struct Foo {
     tiny: bool,
